@@ -1,0 +1,39 @@
+const mongoose=require('mongoose');
+
+const userSchema=new mongoose.Schema({
+    firstName:{
+        type:String,
+        required:true
+    },
+    lastName:String,
+    email:{
+        type:String,
+        required:true,
+        unique:true,
+    },
+    password:{
+        type:String,
+        required:true,
+    },
+    gender:{
+        type:String,
+        enum:['male','female','other'],
+        required:true,
+    },
+    userType:{
+        type:String,
+        enum:['customer','admin'],
+        required:true,
+    },
+    bagItems:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Product'
+    }],
+    wishlistItems:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Product',
+        default:[],
+    }],
+});
+
+module.exports=mongoose.model('User',userSchema);
